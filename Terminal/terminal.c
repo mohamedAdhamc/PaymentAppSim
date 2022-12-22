@@ -158,6 +158,10 @@ void setMaxAmountTest(void) {
 }
 
 
-// int main () {
-
-// }
+int main () {
+    // getTransactionDateTest();
+    // isCardExpriedTest();
+    // getTransactionAmountTest();
+    // isBelowMaxAmountTest();
+    setMaxAmountTest();
+}

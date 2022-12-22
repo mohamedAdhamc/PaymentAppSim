@@ -33,7 +33,7 @@ void appStart(void){
     EN_transState_t serverState =  recieveTransactionData(&transData);
     switch (serverState) {
         case FRAUD_CARD:
-                        // printf("%s", "Declined Fraud Card");
+                        printf("%s", "Declined Fraud Card");
                         return;            
         case DECLINED_STOLEN_CARD:
                         printf("%s", "Declined Stolen Card");

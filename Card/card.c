@@ -113,7 +113,7 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData) {
     uint8_t expirationInput[6];
     //init with spaces
     for (int i = 0; i<6 ; ++i)
-        expirationInput[i] = '&';
+        expirationInput[i] = '%';
     scanf("%6s", expirationInput);
     //check for wrong format
     if (expirationInput[2] != '/')
@@ -154,5 +154,7 @@ void getCardExpiryDateTest(void) {
 
 
 // int main (void){
-//     getCardExpiryDateTest();
+//     // getCardHolderNameTest();
+//     // getCardExpiryDateTest();
+//     getCardPANTest();
 // }

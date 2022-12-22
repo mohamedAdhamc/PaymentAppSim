@@ -139,7 +139,7 @@ void recieveTransactionDataTest(void) {
     free(transDataTest);
 }
 
-// int main(void){
-//     isAmountAvailableTest();
-//     return 0;
-// }
+int main(void){
+    isAmountAvailableTest();
+    return 0;
+}
