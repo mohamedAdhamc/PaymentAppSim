@@ -86,6 +86,16 @@ EN_serverError_t saveTransaction(ST_transaction *transData) {
     return SERVER_OK;
 }
 
+void saveTransactionTest() {
+    ST_transaction* testTransData = malloc(sizeof(ST_transaction));
+    //fill with test data
+    strcpy(testTransData->cardHolderData.cardHolderName, "mohamed adham mohamed");
+    strcpy(testTransData->cardHolderData.cardExpirationDate, "06/20");
+    printf("%s%s", "Tester Name: Mohamed Adham \n", "Function Name: saveTransactionTest \n");
+    printf("%s%s%s", "Test Case 1: \n", "Input Data: transaction data \n", "Expected Result: 0 (SERVER_OK) \n"); 
+    printf("%s: %u  \n\n", "result", saveTransaction(testTransData));
+}
+
 void listSavedTransactions(void){
     for (int i = 0; i<= latestTransInd; ++i){
         printf("%s\n", "#########################");
@@ -100,8 +110,25 @@ void listSavedTransactions(void){
 }
 
 void listSavedTransactionsTest(void){
+    printf("%s%s", "Tester Name: Mohamed Adham \n", "Function Name: saveTransactionTest \n");
     //fill up transaction data base with random values
-    // transactionDB[0].transactionSequenceNumber
+    ST_transaction testTrans1;
+    strcpy(testTrans1.cardHolderData.cardHolderName, "mohamed adham mohamed");
+    strcpy(testTrans1.terminalData.transactionDate, "02/02/2020");
+    testTrans1.transState = APPROVED;
+    testTrans1.transactionSequenceNumber = 500;
+    testTrans1.terminalData.transAmount = 300;
+    testTrans1.terminalData.maxTransAmount = 1000;
+    transactionDB[0] = testTrans1;
+    ST_transaction testTrans2;
+    strcpy(testTrans2.cardHolderData.cardHolderName, "mohamed ahmed mohamed");
+    strcpy(testTrans2.terminalData.transactionDate, "02/08/2020");
+    testTrans2.transState = APPROVED;
+    testTrans2.transactionSequenceNumber = 501;
+    testTrans2.terminalData.transAmount = 330;
+    testTrans2.terminalData.maxTransAmount = 1000;
+    transactionDB[1] = testTrans2;
+    latestTransInd = 1;
     listSavedTransactions();
 }
 
@@ -122,24 +149,24 @@ EN_transState_t recieveTransactionData(ST_transaction *transData){
 }
 
 void recieveTransactionDataTest(void) {
-    ST_transaction *transDataTest = malloc(sizeof(ST_transaction));
-    // transDataTest->cardHolderData = {"Mohamed Adham Mohamed", "1234567891234567", }
-
     printf("%s%s", "Tester Name: Mohamed Adham \n", "Function Name: recieveTransactionData \n");
+    ST_transaction* testTrData = malloc(sizeof(ST_transaction));
+    strcpy(testTrData->cardHolderData.primaryAccountNumber, "1234547891234567");
+    printf("%s%s%s", "Test Case 1: \n", "Input Data: not found account \n", "Expected Result: 3 (FRAUD_CARD) \n"); 
+    printf("%s: %u  \n\n", "result", recieveTransactionData(testTrData));
+    strcpy(testTrData->cardHolderData.primaryAccountNumber, "1234567891234568");
 
-    printf("%s%s%s", "Test Case 1: \n", "Input Data: 25-05-2020 \n", "Expected Result: 1 (WRONG_DATE) \n"); 
-    printf("%s: %u  \n\n", "result", recieveTransactionData(transDataTest));
+    printf("%s%s%s", "Test Case 2: \n", "Input Data: blocked account \n", "Expected Result: 2 (DECLINED_STOLEN_CARD) \n");
+    printf("%s: %u  \n\n", "result", recieveTransactionData(testTrData));
+    strcpy(testTrData->cardHolderData.primaryAccountNumber, "1234567891234567");
 
-    printf("%s%s%s", "Test Case 2: \n", "Input Data: 25/5/2020 \n", "Expected Result: 1 (WRONG_DATE) \n");
-    printf("%s: %u  \n\n", "result", recieveTransactionData(transDataTest));
+    printf("%s%s%s", "Test Case 3: \n", "Input Data: good account \n", "Expected Result: 0 (APPROVED) \n");
+    printf("%s: %u  \n\n", "result", recieveTransactionData(testTrData));
 
-    printf("%s%s%s", "Test Case 4: \n", "Input Data: 25/05/2020 \n", "Expected Result: 0 (TERMINAL_OK) \n");
-    printf("%s: %u  \n\n", "result", recieveTransactionData(transDataTest));
-
-    free(transDataTest);
+    free(testTrData);
 }
 
 int main(void){
-    isAmountAvailableTest();
+    recieveTransactionDataTest();
     return 0;
 }
